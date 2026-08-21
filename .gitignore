@@ -1,0 +1,15 @@
+﻿node_modules/
+.next/
+.next_*/
+.env
+.env.local
+.env.*
+!.env.example
+*.log
+.DS_Store
+*.tsbuildinfo
+_screenshots/
+*.png
+*.jpg
+*.jpeg
+.data/
