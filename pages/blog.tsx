@@ -1,58 +1,165 @@
+import React from 'react'
 import Head from 'next/head'
+import Layout from '../components/Layout'
+import { PRODUCT } from '../lib/product'
+import { buildFaqJsonLd, buildHowToJsonLd } from '../lib/schema'
+import { geoPosts } from '../data/geoPosts'
 
-export default function Page() {
-  const NAME = "AIActRadar";
+// FAQ 直接复用产品定义中的真实问答（lib/product.ts → PRODUCT.geoFaq），不另造内容。
+const faqs = PRODUCT.geoFaq.map((f) => ({ question: f.q, answer: f.a }))
+
+// HowTo 描述产品真实工作流（与 /api/tool 的输入字段一致），不虚构能力。
+const howToBlocks = [
+  {
+    name: 'How to map an AI system to its EU AI Act obligations',
+    steps: [
+      {
+        name: 'Describe the AI system',
+        text: 'Write one or two sentences on what the system does in production — for example, screening job applicants or scoring credit. The description drives the Annex III use-case match.',
+      },
+      {
+        name: 'State the intended users',
+        text: 'Name who operates the system and who is affected (HR teams, public authorities, consumers). Intended use is what determines the applicable risk tier, not the vendor marketing label.',
+      },
+      {
+        name: 'Pick the deployment context',
+        text: 'Choose the context you actually deploy in — public sector, workplace / HR, healthcare, finance, or general consumer. Context plus intended users is what separates limited-risk transparency duties from Annex III high-risk duties.',
+      },
+      {
+        name: 'Read the obligation output as a checklist',
+        text: 'AIActRadar returns a risk tier with rationale, the obligations that tier triggers, the phased deadlines, and an action checklist. Treat it as decision support and review it with qualified counsel before relying on it for a conformity assessment.',
+      },
+    ],
+  },
+]
+
+const NAME = PRODUCT.name
+
+export default function BlogPage() {
   return (
-    <>
+    <Layout>
       <Head>
-        <title>{NAME} — Blog</title>
-        <meta name="description" content={NAME + " — Definitional and how-to posts."} />
+        <title>{`${PRODUCT.name} — EU AI Act guides and checklists`}</title>
+        <meta
+          name="description"
+          content="EU AI Act guides for deployers and providers: risk classification under Annex III, Art. 26 duties, GPAI obligations, penalty tiers, and the Digital Omnibus timeline — each guide carries primary-source references."
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqJsonLd(faqs)) }}
+        />
+        {howToBlocks.map((block, i) => (
+          <script
+            key={`howto-${i}`}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(buildHowToJsonLd(block.name, block.steps)),
+            }}
+          />
+        ))}
+        {geoPosts.map((p, i) => (
+          <script
+            key={`article-${i}`}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                headline: p.title,
+                description: p.description,
+                datePublished: p.datePublished,
+                dateModified: p.dateModified,
+                inLanguage: "en",
+                mainEntityOfPage: `https://aiactradar.lxsaihub.com/blog/${p.slug}`,
+              }),
+            }}
+          />
+        ))}
       </Head>
-      <div className="min-h-screen bg-slate-50 text-slate-800">
-        <header className="border-b border-slate-200 bg-white">
-          <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-            <a href="/" className="font-bold text-slate-900">AIActRadar</a>
-            <nav className="hidden md:flex gap-6 text-sm font-semibold text-slate-500">
-              <a href="/use-cases" className="hover:text-slate-900">Use cases</a>
-              <a href="/integrations" className="hover:text-slate-900">Integrations</a>
-              <a href="/how-it-works" className="hover:text-slate-900">How it works</a>
-              <a href="/security" className="hover:text-slate-900">Security</a>
-              <a href="/blog" className="hover:text-slate-900">Blog</a>
-            </nav>
+
+      <div className="text-xs font-bold tracking-widest uppercase text-indigo-600 mb-3">Blog · GEO</div>
+      <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-slate-900">
+        EU AI Act, explained
+      </h1>
+      <p className="text-lg text-slate-600 mb-10">
+        Own the definitional queries compliance teams ask before they trust an AI system to the EU market.
+      </p>
+
+      {/* At a glance — 仅列可核验事实 */}
+      <section className="rounded-xl border border-slate-200 bg-slate-50 p-6 mb-12">
+        <h2 className="text-lg font-bold text-slate-900 mb-4">What does {NAME} include at a glance?</h2>
+        <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 text-sm">
+          <div className="flex justify-between gap-4">
+            <dt className="text-slate-500">Regulation</dt>
+            <dd className="font-semibold text-slate-900">(EU) 2024/1689</dd>
           </div>
-        </header>
-        <main className="max-w-3xl mx-auto px-6 py-14">
-          <h1 className="text-3xl font-bold text-slate-900">Blog</h1>
-          <p className="mt-3 text-slate-600">Definitional and how-to posts that help search engines and humans understand AIActRadar.</p>
-          <div className="mt-8 grid gap-5 sm:grid-cols-2">
-          <article className="rounded-xl border border-slate-200 bg-white p-6">
-            <h3 className="font-semibold text-slate-900">What is AIActRadar — and when to use it</h3>
-            <p className="mt-2 text-sm text-slate-600">Define AIActRadar in plain terms, the problem it solves, and the 3 signs you need it.</p>
-          </article>
-          <article className="rounded-xl border border-slate-200 bg-white p-6">
-            <h3 className="font-semibold text-slate-900">How to run a compliance status in 10 minutes</h3>
-            <p className="mt-2 text-sm text-slate-600">A step-by-step for a first compliance status pass using AIActRadar.</p>
-          </article>
-          <article className="rounded-xl border border-slate-200 bg-white p-6">
-            <h3 className="font-semibold text-slate-900">Common compliance status mistakes (and how to avoid them)</h3>
-            <p className="mt-2 text-sm text-slate-600">5 recurring errors teams make in compliance status, with fixes.</p>
-          </article>
-          <article className="rounded-xl border border-slate-200 bg-white p-6">
-            <h3 className="font-semibold text-slate-900">AIActRadar vs. doing it manually</h3>
-            <p className="mt-2 text-sm text-slate-600">Trade-offs: speed, cost, and where human review still wins.</p>
-          </article>
+          <div className="flex justify-between gap-4">
+            <dt className="text-slate-500">Ruleset pinned</dt>
+            <dd className="font-semibold text-slate-900">{PRODUCT.rulesetId}</dd>
           </div>
-        </main>
-        <footer className="border-t border-slate-200 bg-white">
-          <div className="max-w-5xl mx-auto px-6 py-8 text-sm text-slate-500 flex flex-wrap gap-6">
-            <a href="/security" className="hover:text-slate-900">Security</a>
-            <a href="/use-cases" className="hover:text-slate-900">Use cases</a>
-            <a href="/integrations" className="hover:text-slate-900">Integrations</a>
-            <a href="/how-it-works" className="hover:text-slate-900">How it works</a>
-            <a href="/blog" className="hover:text-slate-900">Blog</a>
+          <div className="flex justify-between gap-4">
+            <dt className="text-slate-500">Risk tiers</dt>
+            <dd className="font-semibold text-slate-900">Prohibited · High · Limited · Minimal</dd>
           </div>
-        </footer>
+          <div className="flex justify-between gap-4">
+            <dt className="text-slate-500">Annex III high-risk duties</dt>
+            <dd className="font-semibold text-slate-900">Apply from 2 Dec 2027</dd>
+          </div>
+          <div className="flex justify-between gap-4">
+            <dt className="text-slate-500">Published guides</dt>
+            <dd className="font-semibold text-slate-900">{geoPosts.length}</dd>
+          </div>
+          <div className="flex justify-between gap-4">
+            <dt className="text-slate-500">Output type</dt>
+            <dd className="font-semibold text-slate-900">Decision support, not a certificate</dd>
+          </div>
+        </dl>
+      </section>
+
+      <h2 className="text-2xl font-bold mb-2 text-slate-900">Which deep-dive guides should you read first?</h2>
+      <p className="text-sm text-slate-500 mb-6">
+        Long-form, cited explainers. Each carries primary-source references and a decision-support disclaimer.
+      </p>
+      <div className="space-y-6">
+        {geoPosts.map((p) => (
+          <article key={p.slug} className="border-b border-slate-200 pb-6">
+            <h3 className="text-xl font-semibold">
+              <a href={`/blog/${p.slug}`} className="text-indigo-700 hover:underline">
+                {p.title}
+              </a>
+            </h3>
+            <p className="text-sm text-slate-600 mt-1">{p.description}</p>
+            <p className="text-xs text-slate-400 mt-2">
+              Published {p.datePublished}
+              {p.dateModified !== p.datePublished ? ` · Updated ${p.dateModified}` : ''}
+            </p>
+          </article>
+        ))}
       </div>
-    </>
+
+      <h2 className="text-2xl font-bold mt-14 mb-2 text-slate-900">What do people ask about {NAME}?</h2>
+      <div className="space-y-5">
+        {faqs.map((f, i) => (
+          <div key={i} className="border-b border-slate-200 pb-4">
+            <div className="font-semibold text-slate-900">{f.question}</div>
+            <p className="text-slate-700 mt-1 leading-relaxed">{f.answer}</p>
+          </div>
+        ))}
+      </div>
+
+      <h2 className="text-2xl font-bold mt-14 mb-2 text-slate-900">{howToBlocks[0].name}</h2>
+      <ol className="list-decimal pl-6 space-y-3 text-slate-700 leading-relaxed">
+        {howToBlocks[0].steps.map((s, i) => (
+          <li key={i}>
+            <span className="font-semibold text-slate-900">{s.name}.</span> {s.text}
+          </li>
+        ))}
+      </ol>
+
+      <p className="text-xs text-slate-400 mt-10">
+        Scope: AIActRadar produces decision-support documentation. It is not legal advice and does not issue a
+        conformity certificate. Verify against EUR-Lex Regulation (EU) 2024/1689 and current Commission guidance.
+      </p>
+    </Layout>
   )
 }

@@ -4,13 +4,13 @@ import type { RunState } from './pipeline'
 
 function runsDir() {
   const dir = path.join(process.cwd(), '.data', 'runs')
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+  try { if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true }) } catch (e) { /* read-only FS (serverless): best effort */ }
   return dir
 }
 
 export function saveRun(state: RunState) {
   const p = path.join(runsDir(), `${state.runId}.json`)
-  fs.writeFileSync(p, JSON.stringify(state, null, 2), 'utf8')
+  try { fs.writeFileSync(p, JSON.stringify(state, null, 2), 'utf8') } catch (e) { /* read-only FS (serverless): best effort */ }
   return p
 }
 
@@ -26,7 +26,13 @@ export function loadRun(runId: string): RunState | null {
 
 export function listRuns(limit = 100): RunState[] {
   const dir = runsDir()
-  const files = fs.readdirSync(dir).filter((f) => f.endsWith('.json'))
+  let files: string[] = []
+  try {
+    if (!fs.existsSync(dir)) return []
+    files = fs.readdirSync(dir).filter((f) => f.endsWith('.json'))
+  } catch {
+    return []
+  }
   const rows: RunState[] = []
   for (const f of files.slice(-limit).reverse()) {
     try {

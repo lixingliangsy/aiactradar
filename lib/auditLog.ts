@@ -14,12 +14,12 @@ export type AuditEntry = {
 
 function auditPath(slug: string) {
   const dir = path.join(process.cwd(), '.data', 'audit')
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+  try { if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true }) } catch (e) { /* read-only FS (serverless): best effort */ }
   return path.join(dir, `${slug}.jsonl`)
 }
 
 export function appendAudit(slug: string, entry: AuditEntry) {
-  fs.appendFileSync(auditPath(slug), JSON.stringify(entry) + '\n', 'utf8')
+  try { fs.appendFileSync(auditPath(slug), JSON.stringify(entry) + '\n', 'utf8') } catch (e) { /* read-only FS (serverless): best effort */ }
 }
 
 // ---- T1 不可变审计链（playbook-t1-t2.md §1，沉墨方案 A：沿用 .data/audit） ----
@@ -83,7 +83,7 @@ export function appendTrail(slug: string, entry: Omit<TrailEntry, 'prev_sha' | '
   const payload = canonicalTrail(entry)
   const payloadSha = chainSha(prevSha, payload)
   const full: TrailEntry = { ...entry, prev_sha: prevSha, payload_sha: payloadSha }
-  fs.appendFileSync(tp, JSON.stringify(full) + '\n', 'utf8')
+  try { fs.appendFileSync(tp, JSON.stringify(full) + '\n', 'utf8') } catch (e) { /* read-only FS (serverless): best effort */ }
   return full
 }
 

@@ -17,7 +17,7 @@ function dataDir(): string {
     process.env.VERCEL || process.env.NODE_ENV === 'production'
       ? path.join('/tmp', 'writeflow-byok')
       : path.join(process.cwd(), '.data')
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+  try { if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true }) } catch (e) { /* read-only FS (serverless): best effort */ }
   return dir
 }
 
@@ -65,7 +65,7 @@ export function saveByokKey(slug: string, apiKey: string): ByokRecord {
     throw new Error('Invalid API key format (expect sk-… or token length ≥ 32)')
   }
   const rec: ByokRecord = { apiKey: key, updatedAt: new Date().toISOString() }
-  fs.writeFileSync(storePath(slug), JSON.stringify(rec), 'utf8')
+  try { fs.writeFileSync(storePath(slug), JSON.stringify(rec), 'utf8') } catch (e) { /* read-only FS (serverless): best effort */ }
   return rec
 }
 

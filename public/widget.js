@@ -1,23 +1,14 @@
 /**
- * public/widget.js —— 跨站可嵌入客服脚本（vanilla JS，零依赖）
+ * public/widget.js — embeddable support launcher. No dependencies.
  *
- * 用法（放在任意第三方站点）：
- *   <script
- *     src="https://你的域名/widget.js"
- *     data-host="https://你的域名"
- *     data-product="gstack"
- *     async
- *   ></script>
+ * <script src="https://YOUR_DOMAIN/widget.js" data-host="https://YOUR_DOMAIN" data-product="aiactradar" async></script>
  *
- * 行为：
- * - 右下角注入浮动入口按钮。
- * - 点击打开一个 iframe（指向 <data-host>/embed/chat），样式经 iframe 隔离，跨站安全。
- * - 不读取宿主页面 DOM / 全局变量，仅依赖自身属性与 localStorage（作用域为 gstack 域名）。
+ * Injects a button that opens /embed/chat in an iframe. Does not read the host page.
  */
 (function () {
   "use strict";
-  if (window.__gstackWidgetLoaded) return;
-  window.__gstackWidgetLoaded = true;
+  if (window.__supportWidgetLoaded) return;
+  window.__supportWidgetLoaded = true;
 
   function getScriptTag() {
     if (document.currentScript) return document.currentScript;
@@ -31,7 +22,7 @@
   var tag = getScriptTag();
   var host = (tag && tag.getAttribute("data-host")) || window.location.origin;
   host = host.replace(/\/+$/, "");
-  var product = (tag && tag.getAttribute("data-product")) || "gstack";
+  var product = (tag && tag.getAttribute("data-product")) || "aiactradar";
 
   var BLUE = "#2563EB";
   var shadow = null;
@@ -39,7 +30,7 @@
   function ensureRoot() {
     if (shadow) return shadow;
     var hostEl = document.createElement("div");
-    hostEl.id = "gstack-chat-root";
+    hostEl.id = "support-chat-root";
     hostEl.style.cssText = "position:fixed;right:20px;bottom:20px;z-index:2147483000;";
     document.body.appendChild(hostEl);
     shadow = hostEl.attachShadow ? hostEl.attachShadow({ mode: "open" }) : hostEl;
@@ -59,15 +50,15 @@
 
     var btn = document.createElement("button");
     btn.className = "gw-btn";
-    btn.setAttribute("aria-label", "打开 AI 客服");
-    btn.textContent = "💬";
+    btn.setAttribute("aria-label", "Open AI support");
+    btn.textContent = "\uD83D\uDCAC";
     root.appendChild(btn);
 
     var panel = null;
-    var sessionKey = (product || "gstack") + "_chat_session";
+    var sessionKey = (product || "aiactradar") + "_chat_session";
     var sid = "cw_" + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
     try {
-      sid = (localStorage.getItem(sessionKey) || sid);
+      sid = localStorage.getItem(sessionKey) || sid;
     } catch (e) {}
 
     btn.addEventListener("click", function () {
@@ -78,7 +69,7 @@
       }
       panel = document.createElement("iframe");
       panel.className = "gw-panel";
-      panel.setAttribute("title", product + " AI 客服");
+      panel.setAttribute("title", product + " AI support");
       panel.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms");
       panel.src = host + "/embed/chat?product=" + encodeURIComponent(product) + "&sessionId=" + encodeURIComponent(sid);
       root.appendChild(panel);

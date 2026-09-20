@@ -1,13 +1,4 @@
-/**
- * lib/store.ts —— 持久层抽象（AIActRadar M2 的 JSON 文件模式升级版）
- *
- * 设计要点（遵循 AIActRadar 工程红线）：
- * - dev：JSON 文件（.data/<collection>.json），零外部依赖。
- * - prod：CloudBase 文档/MySQL（STORE_MODE=cloudbase），规避 Vercel serverless FS 易失。
- * - 绝不静默 mock：CloudBase 模式若未接入则显式抛错，由调用方降级。
- * - 每集合串行化写入，避免并发写损坏（简单 Promise 队列）。
- */
-
+/** JSON file store for support sessions. CloudBase mode fails loudly if selected but unwired. */
 import fs from "fs";
 import path from "path";
 
@@ -39,17 +30,22 @@ async function readFile<T extends Entity>(collection: string): Promise<T[]> {
     return JSON.parse(raw) as T[];
   } catch (e: any) {
     if (e?.code === "ENOENT") return [];
-    // 损坏文件不静默吞掉，但降级为空数组并告警（非主流程阻断）
     console.warn(`[store] read ${collection} failed, treating as empty:`, e?.message);
     return [];
   }
 }
 
 async function writeFile<T extends Entity>(collection: string, items: T[]): Promise<void> {
-  await fs.promises.mkdir(DATA_DIR, { recursive: true });
-  const tmp = fileFor(collection) + ".tmp";
-  await fs.promises.writeFile(tmp, JSON.stringify(items, null, 2), "utf8");
-  await fs.promises.rename(tmp, fileFor(collection)); // 原子替换
+  // Serverless (Vercel) has a read-only filesystem: persistence is best-effort.
+  // Never let a failed write break the main AI flow — warn and continue in-memory.
+  try {
+    await fs.promises.mkdir(DATA_DIR, { recursive: true });
+    const tmp = fileFor(collection) + ".tmp";
+    await fs.promises.writeFile(tmp, JSON.stringify(items, null, 2), "utf8");
+    await fs.promises.rename(tmp, fileFor(collection));
+  } catch (e: any) {
+    console.warn(`[store] write ${collection} skipped (read-only FS, non-fatal):`, e?.message);
+  }
 }
 
 export interface Store {
@@ -102,11 +98,10 @@ class FileStore implements Store {
 }
 
 class CloudBaseStore implements Store {
-  // Phase 7 部署时接入 @cloudbase/node-sdk；此处显式抛错，绝不静默回退到文件。
   private notWired(): never {
     throw new Error(
-      "STORE_MODE=cloudbase 但 CloudBase 适配器尚未接入（Phase 7 部署时完成）。" +
-        "请先设置 STORE_MODE=file，或完成 CloudBase 连接。"
+      "STORE_MODE=cloudbase but the CloudBase adapter is not connected yet (done in Phase 7 deploy)." +
+        "Set STORE_MODE=file first, or finish the CloudBase connection."
     );
   }
   list<T extends Entity>(): Promise<T[]> { return this.notWired(); }

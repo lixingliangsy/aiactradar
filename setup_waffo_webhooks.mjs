@@ -28,7 +28,7 @@ const client = new WaffoPancake({ merchantId, privateKey });
 
 const STORE = 'STO_6p1cnwJDlk6gzVNUCQdWqN';
 const WH = [
-  { slug: 'aiactradar',   url: 'https://aiactradar.vercel.app/api/waffo-webhook' },
+  { slug: 'aiactradar',   url: 'https://aiactradar.lxsaihub.com/api/waffo-webhook' },
   { slug: 'agentredteam', url: 'https://agentredteam-coral.vercel.app/api/waffo-webhook' },
   { slug: 'privacyscan',  url: 'https://privacyscan-ten.vercel.app/api/waffo-webhook' },
 ];

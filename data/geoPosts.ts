@@ -36,7 +36,7 @@ export const geoPosts: GeoPost[] = [
       },
       {
         "question": "What is the difference between a deployer and a provider?",
-        "answer": "The provider places the AI system on the EU market and owns the build — risk management, data governance, technical documentation (Art. 25 / 9 / 10 / 11). The deployer uses it under its own authority and must use it correctly (Art. 26). One organisation can be both. See [provider vs deployer responsibilities](/blog/provider-vs-deployer-responsibilities) for the full split. <!-- INTERNAL LINK: #2 -->"
+        "answer": "The provider places the AI system on the EU market and owns the build — risk management, data governance, technical documentation (Art. 25 / 9 / 10 / 11). The deployer uses it under its own authority and must use it correctly (Art. 26). One organisation can be both. See [provider vs deployer responsibilities](/blog/provider-vs-deployer-responsibilities) for the full split."
       },
       {
         "question": "Do I need to register anywhere?",
@@ -44,7 +44,7 @@ export const geoPosts: GeoPost[] = [
       }
     ],
     "disclaimer": "<p>## Disclaimer (G1 / G3)</p><p>Disclaimer (G1 / G3): This article is for general informational purposes only. AIActRadar is a decision-support tool and does not provide legal advice or issue compliance certificates. For binding assessments, consult qualified EU legal counsel. Penalty figures (EU AI Act up to €35M or 7% of global annual turnover; GDPR up to €20M or 4%) are cited as publicly available reference points under Art. 99 and Art. 83 respectively — not predictions of any specific outcome.</p>",
-    "cta": "<p>Get the cited EU AI Act obligation tracker — free, decision-support only. Join the waitlist: <a href=\"https://aiactradar.vercel.app\" class=\"underline font-semibold\">try AIActRadar</a></p>",
+    "cta": "<p>Get the cited EU AI Act obligation tracker — free, decision-support only. Join the waitlist: <a href=\"https://aiactradar.lxsaihub.com\" class=\"underline font-semibold\">try AIActRadar</a></p>",
     "blogPosting": {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
@@ -60,12 +60,12 @@ export const geoPosts: GeoPost[] = [
         "name": "AIActRadar",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://aiactradar.vercel.app/logo.png"
+          "url": "https://aiactradar.lxsaihub.com/logo.png"
         }
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://aiactradar.vercel.app/blog/eu-ai-act-compliance-checklist-deployers"
+        "@id": "https://aiactradar.lxsaihub.com/blog/eu-ai-act-compliance-checklist-deployers"
       },
       "description": "A practical EU AI Act compliance checklist for deployers: who qualifies under Art. 26, the 2026–2027 obligations, and the documentation that survives an audit. Covers the Digital Omnibus delay of Annex III high-risk duties to 2 December 2027.",
       "articleBody": "A deployer under the EU AI Act is any person or body that uses an AI system under its authority, whether or not it built the system (Art. 3(6); Art. 26). For 2026–2027 the priority is to stand up foundational, always-on duties now: an AI system inventory and risk classification (Art. 6), AI literacy evidence (Art. 4), using systems per the provider's instructions (Art. 26(1)), transparency to affected people (Art. 26(6) + Art. 50), and retaining the provider's technical documentation (Art. 11 / Art. 13). The Digital Omnibus moved the high-risk (Annex III) deployer duties — fundamental-rights assessment (Art. 26(2)), human oversight (Art. 26(3) + Art. 14), incident reporting (Art. 26(5) + Art. 72), and EU database registration (Art. 26(7)) — from 2 August 2026 to 2 December 2027. This article maps each obligation to its article and explains the evidence an audit would expect.",
@@ -148,7 +148,7 @@ export const geoPosts: GeoPost[] = [
       }
     ],
     "disclaimer": "<p>## Disclaimer (G1 / G3)</p><p>Disclaimer (G1 / G3): This article is for general informational purposes only. AIActRadar is a decision-support tool and does not provide legal advice or issue compliance certificates. For binding assessments, consult qualified EU legal counsel. Penalty figures (EU AI Act up to €35M or 7% of global annual turnover; GDPR up to €20M or 4%) are cited as publicly available reference points under Art. 99 and Art. 83 respectively — not predictions of any specific outcome.</p>",
-    "cta": "<p>Get the cited EU AI Act timeline and obligation tracker — free, decision-support only. Join the waitlist: <a href=\"https://aiactradar.vercel.app\" class=\"underline font-semibold\">try AIActRadar</a></p>",
+    "cta": "<p>Get the cited EU AI Act timeline and obligation tracker — free, decision-support only. Join the waitlist: <a href=\"https://aiactradar.lxsaihub.com\" class=\"underline font-semibold\">try AIActRadar</a></p>",
     "blogPosting": {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
@@ -164,12 +164,12 @@ export const geoPosts: GeoPost[] = [
         "name": "AIActRadar",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://aiactradar.vercel.app/logo.png"
+          "url": "https://aiactradar.lxsaihub.com/logo.png"
         }
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://aiactradar.vercel.app/blog/eu-ai-act-timeline-2024-2027"
+        "@id": "https://aiactradar.lxsaihub.com/blog/eu-ai-act-timeline-2024-2027"
       },
       "description": "The EU AI Act applies in phases. This timeline shows which dates survive the Digital Omnibus (entry into force 1 Aug 2024, Art. 5 / Art. 4 on 2 Feb 2025, GPAI on 2 Aug 2025, Art. 50 transparency on 2 Aug 2026) and which moved (Annex III high-risk to 2 Dec 2027, Annex I to 2 Aug 2028).",
       "articleBody": "The EU AI Act (Regulation (EU) 2024/1689) applies in phases under Art. 113. Its backbone timeline is unchanged by the Digital Omnibus: entry into force on 1 August 2024, prohibited practices and AI literacy from 2 February 2025, GPAI rules from 2 August 2025, and Art. 50 transparency from 2 August 2026. What moved is narrow: stand-alone Annex III high-risk obligations shift from 2 August 2026 to 2 December 2027, and Annex I product-integrated high-risk obligations shift from 2 August 2027 to 2 August 2028. The substance of the high-risk regime (Art. 9 risk management, Art. 10 data governance, Art. 11 technical documentation, Art. 14 human oversight, Art. 26(2) deployer assessment, Art. 43 conformity, Art. 49 / 71 registration) is unchanged; only the application date moved. Classification under Art. 6 is not postponed. The Digital Omnibus also adds new Art. 5 prohibitions and an Art. 50(2) watermarking grace, both from 2 December 2026. As of July 2026 the amending regulation was agreed politically (7 May 2026) and Council-approved (29 June 2026) but not yet published in the Official Journal, so the original dates remain on the books until publication.",
@@ -252,7 +252,7 @@ export const geoPosts: GeoPost[] = [
       }
     ],
     "disclaimer": "<p>## Disclaimer (G1 / G3)</p><p>Disclaimer (G1 / G3): This article is for general informational purposes only. AIActRadar is a decision-support tool and does not provide legal advice or issue compliance certificates. For binding assessments, consult qualified EU legal counsel. Penalty figures (EU AI Act up to €35M or 7% of global annual turnover; GDPR up to €20M or 4%) are cited as publicly available reference points under Art. 99 and Art. 83 respectively — not predictions of any specific outcome.</p>",
-    "cta": "<p>Get the cited EU AI Act obligation tracker — free, decision-support only, no compliance promises. Join the waitlist: <a href=\"https://aiactradar.vercel.app\" class=\"underline font-semibold\">try AIActRadar</a></p>",
+    "cta": "<p>Get the cited EU AI Act obligation tracker — free, decision-support only, no compliance promises. Join the waitlist: <a href=\"https://aiactradar.lxsaihub.com\" class=\"underline font-semibold\">try AIActRadar</a></p>",
     "blogPosting": {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
@@ -268,12 +268,12 @@ export const geoPosts: GeoPost[] = [
         "name": "AIActRadar",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://aiactradar.vercel.app/logo.png"
+          "url": "https://aiactradar.lxsaihub.com/logo.png"
         }
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://aiactradar.vercel.app/blog/eu-ai-act-vs-gdpr-penalty-tiers"
+        "@id": "https://aiactradar.lxsaihub.com/blog/eu-ai-act-vs-gdpr-penalty-tiers"
       },
       "description": "Compare the EU AI Act penalty tiers (Art. 99: up to €35M or 7%) with the GDPR (Art. 83: up to €20M or 4%). Explains who each regime fines — deployers under the AI Act vs controllers/processors under the GDPR — and why the two can apply in parallel to the same AI system.",
       "articleBody": "The EU AI Act (Regulation (EU) 2024/1689) and the GDPR (Regulation (EU) 2016/679) each impose administrative fines through separate legal bases: the AI Act via Art. 99, the GDPR via Art. 83. The AI Act tops out at €35,000,000 or 7% of global annual turnover for prohibited practices (Art. 5), with a €15,000,000 or 3% tier for operator obligations including deployers (Art. 26) and a €7,500,000 or 1% tier for false information to authorities; SME fines are capped at the lower of the amount or percentage (Art. 99(6)). The GDPR tops out at €20,000,000 or 4% for breaches of basic principles, data-subject rights, transfers, and non-compliance with an order (Art. 83(5)-(6)), and €10,000,000 or 2% for controller/processor obligations (Art. 83(4)); it has no general SME discount. The AI Act fines by operator role (provider vs deployer) while the GDPR fines by controller vs processor, so a single AI system processing personal data can make an organisation a deployer under one law and a controller under the other. Because the regimes rest on separate legal bases and are enforced by separate authorities, parallel fines are possible. Penalty ceilings are public reference points, not predictions.",
@@ -356,7 +356,7 @@ export const geoPosts: GeoPost[] = [
       }
     ],
     "disclaimer": "<p>## Disclaimer (G1 / G3)</p><p>Disclaimer (G1 / G3): This article is for general informational purposes only. AIActRadar is a decision-support tool and does not provide legal advice or issue compliance certificates. For binding assessments, consult qualified EU legal counsel. Penalty figures (EU AI Act up to €35M or 7% of global annual turnover; GDPR up to €20M or 4%) are cited as publicly available reference points under Art. 99 and Art. 83 respectively — not predictions of any specific outcome.</p>",
-    "cta": "<p>Get the cited EU AI Act obligation tracker — free, decision-support only. Join the waitlist: <a href=\"https://aiactradar.vercel.app\" class=\"underline font-semibold\">try AIActRadar</a></p>",
+    "cta": "<p>Get the cited EU AI Act obligation tracker — free, decision-support only. Join the waitlist: <a href=\"https://aiactradar.lxsaihub.com\" class=\"underline font-semibold\">try AIActRadar</a></p>",
     "blogPosting": {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
@@ -372,12 +372,12 @@ export const geoPosts: GeoPost[] = [
         "name": "AIActRadar",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://aiactradar.vercel.app/logo.png"
+          "url": "https://aiactradar.lxsaihub.com/logo.png"
         }
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://aiactradar.vercel.app/blog/gpai-obligations-art-53-55"
+        "@id": "https://aiactradar.lxsaihub.com/blog/gpai-obligations-art-53-55"
       },
       "description": "What EU AI Act Articles 53 and 55 require of general-purpose AI (GPAI) model providers: technical documentation, training-content summary, copyright policy, and systemic-risk evaluation and monitoring. Covers the 2 August 2025 application date, the 10^25 FLOP threshold, the AI Office's role, and what deployers of third-party models owe under Art. 50.",
       "articleBody": "A general-purpose AI (GPAI) model is an AI model that displays significant generality and can perform a wide range of tasks and be integrated into many downstream systems (Art. 3(63)). Under the EU AI Act, GPAI provider obligations in Chapter V (Articles 51-56) applied from 2 August 2025, earlier than the high-risk regime. Article 53 sets baseline duties for every GPAI provider: technical documentation (Annex XI), information to downstream providers (Annex XII), a copyright-compliance policy (Art. 53(1)(c)), and a publicly available training-content summary (Art. 53(1)(d)). Open-source models are exempt from (1)(a)-(b) unless systemic-risk. Article 51 classifies systemic risk via a 10^25 FLOP compute presumption or AI Office designation; Article 55 then adds model evaluation including adversarial testing, systemic-risk assessment and mitigation, serious-incident reporting, and cybersecurity. Article 56 codes of practice are the primary compliance pathway, enforced by the AI Office. Organisations that only consume a third-party GPAI via API are generally deployers (Art. 26), not GPAI providers, and owe transparency duties under Art. 50 (interaction disclosure from 2 August 2026) plus correct-use and documentation-retention duties; they may become providers if they fine-tune and release weights or integrate the model into a high-risk system.",
@@ -456,11 +456,11 @@ export const geoPosts: GeoPost[] = [
       },
       {
         "question": "What is the difference between a provider's and a deployer's duties for a high-risk Annex III system?",
-        "answer": "The provider must place a *conforming* system on the market — risk management (Art. 9), data governance (Art. 10), technical documentation (Art. 11), conformity assessment (Art. 43), declaration of conformity (Art. 47), and registration (Art. 49). The deployer *uses* it correctly — follows instructions, runs the fundamental-rights assessment (Art. 26(2)), applies human oversight (Art. 26(3) + Art. 14)), ensures input-data quality (Art. 26(4)), monitors and reports incidents (Art. 26(5) + Art. 72), and registers its use (Art. 26(7)). See the full split in [provider vs deployer responsibilities](/blog/provider-vs-deployer-responsibilities). <!-- INTERNAL LINK: #2 -->"
+        "answer": "The provider must place a *conforming* system on the market — risk management (Art. 9), data governance (Art. 10), technical documentation (Art. 11), conformity assessment (Art. 43), declaration of conformity (Art. 47), and registration (Art. 49). The deployer *uses* it correctly — follows instructions, runs the fundamental-rights assessment (Art. 26(2)), applies human oversight (Art. 26(3) + Art. 14)), ensures input-data quality (Art. 26(4)), monitors and reports incidents (Art. 26(5) + Art. 72), and registers its use (Art. 26(7)). See the full split in [provider vs deployer responsibilities](/blog/provider-vs-deployer-responsibilities)."
       }
     ],
     "disclaimer": "<p>## Disclaimer (G1 / G3)</p><p>Disclaimer (G1 / G3): This article is for general informational purposes only. AIActRadar is a decision-support tool and does not provide legal advice or issue compliance certificates. For binding assessments, consult qualified EU legal counsel. Penalty figures (EU AI Act up to €35M or 7% of global annual turnover; GDPR up to €20M or 4%) are cited as publicly available reference points under Art. 99 and Art. 83 respectively — not predictions of any specific outcome.</p>",
-    "cta": "<p>Get the cited EU AI Act obligation tracker — free, decision-support only. Join the waitlist: <a href=\"https://aiactradar.vercel.app\" class=\"underline font-semibold\">try AIActRadar</a></p>",
+    "cta": "<p>Get the cited EU AI Act obligation tracker — free, decision-support only. Join the waitlist: <a href=\"https://aiactradar.lxsaihub.com\" class=\"underline font-semibold\">try AIActRadar</a></p>",
     "blogPosting": {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
@@ -476,12 +476,12 @@ export const geoPosts: GeoPost[] = [
         "name": "AIActRadar",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://aiactradar.vercel.app/logo.png"
+          "url": "https://aiactradar.lxsaihub.com/logo.png"
         }
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://aiactradar.vercel.app/blog/high-risk-annex-iii-classification"
+        "@id": "https://aiactradar.lxsaihub.com/blog/high-risk-annex-iii-classification"
       },
       "description": "How the EU AI Act classifies AI systems as high-risk under Article 6: the Annex I and Annex III routes, the significant-risk carve-out (Art. 6(3)), the eight Annex III areas with examples, and the provider vs deployer split. Why classification is a 2026 skill even though Annex III high-risk obligations apply from 2 December 2027.",
       "articleBody": "Under the EU AI Act, an AI system is high-risk under Art. 6(1) when it is a safety component of, or itself is, an Annex I regulated product subject to third-party conformity assessment, or under Art. 6(2) when it is intended for one of the Annex III use-case areas (biometrics, critical infrastructure, education, employment, essential services, law enforcement, migration, justice). Art. 6(3) carves out Annex III systems that pose no significant risk, with four conditions, but profiling is always high-risk; providers claiming the carve-out must document and register under Art. 49(2). Providers self-classify; the EU AI Office supports coherent application. For Annex III systems the high-risk obligations apply from 2 December 2027 under the Digital Omnibus. Providers owe conformity (Art. 9-15, 43, 47, 49); deployers owe correct use, the fundamental-rights assessment, human oversight, monitoring and registration (Art. 26). Classification is a 2026 skill: build the evidence file now.",
@@ -564,7 +564,7 @@ export const geoPosts: GeoPost[] = [
       }
     ],
     "disclaimer": "<p>## Disclaimer (G1 / G3)</p><p>Disclaimer (G1 / G3): This article is for general informational purposes only. AIActRadar is a decision-support tool and does not provide legal advice or issue compliance certificates. For binding assessments, consult qualified EU legal counsel. Penalty figures (EU AI Act up to €35M or 7% of global annual turnover; GDPR up to €20M or 4%) are cited as publicly available reference points under Art. 99 and Art. 83 respectively — not predictions of any specific outcome.</p>",
-    "cta": "<p>Get the cited EU AI Act obligation tracker — free, decision-support only, every finding linked to its article. Join the waitlist: <a href=\"https://aiactradar.vercel.app\" class=\"underline font-semibold\">try AIActRadar</a></p>",
+    "cta": "<p>Get the cited EU AI Act obligation tracker — free, decision-support only, every finding linked to its article. Join the waitlist: <a href=\"https://aiactradar.lxsaihub.com\" class=\"underline font-semibold\">try AIActRadar</a></p>",
     "blogPosting": {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
@@ -580,12 +580,12 @@ export const geoPosts: GeoPost[] = [
         "name": "AIActRadar",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://aiactradar.vercel.app/logo.png"
+          "url": "https://aiactradar.lxsaihub.com/logo.png"
         }
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://aiactradar.vercel.app/blog/open-source-ai-act-exception-art-2-12"
+        "@id": "https://aiactradar.lxsaihub.com/blog/open-source-ai-act-exception-art-2-12"
       },
       "description": "What the EU AI Act Art. 2(12) free and open-source exception actually covers, when it stops applying (high-risk, safety component, Art. 50 transparency, GPAI Title IV), and why open-weight models and deployers are not exempt.",
       "articleBody": "Article 2(12) of Regulation (EU) 2024/1689 exempts free and open-source AI components provided under an open licence from the AI Act, but the exemption is conditional. It ends when the component is placed on the market or put into service as a high-risk AI system, a safety component of a product, an Article 50 transparency system, or a GPAI model caught by Title IV (except the Art. 51(2)/(3) written-exemption duty). Open-source GPAI providers still owe Article 53 duties (copyright policy, training-data summary) and systemic-risk models owe all of Article 55. A business deploying an open model is a deployer under Article 26 regardless of who built the model, and may become a provider under Article 25 if it places a modified system on the EU market. The Digital Omnibus delays the high-risk regime's application (Annex III to 2 Dec 2027) but does not amend Article 2(12).",
@@ -668,7 +668,7 @@ export const geoPosts: GeoPost[] = [
       }
     ],
     "disclaimer": "<p>## Disclaimer (G1 / G3)</p><p>Disclaimer (G1 / G3): This article is for general informational purposes only. AIActRadar is a decision-support tool and does not provide legal advice or issue compliance certificates. For binding assessments, consult qualified EU legal counsel. Penalty figures (EU AI Act up to €35M or 7% of global annual turnover; GDPR up to €20M or 4%) are cited as publicly available reference points under Art. 99 and Art. 83 respectively — not predictions of any specific outcome.</p>",
-    "cta": "<p>Get the cited EU AI Act obligation tracker — free, decision-support only. Join the waitlist: <a href=\"https://aiactradar.vercel.app\" class=\"underline font-semibold\">try AIActRadar</a></p>",
+    "cta": "<p>Get the cited EU AI Act obligation tracker — free, decision-support only. Join the waitlist: <a href=\"https://aiactradar.lxsaihub.com\" class=\"underline font-semibold\">try AIActRadar</a></p>",
     "blogPosting": {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
@@ -684,12 +684,12 @@ export const geoPosts: GeoPost[] = [
         "name": "AIActRadar",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://aiactradar.vercel.app/logo.png"
+          "url": "https://aiactradar.lxsaihub.com/logo.png"
         }
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://aiactradar.vercel.app/blog/provider-vs-deployer-responsibilities"
+        "@id": "https://aiactradar.lxsaihub.com/blog/provider-vs-deployer-responsibilities"
       },
       "description": "How the EU AI Act splits responsibility between providers (Art. 3(3), Art. 25) and deployers (Art. 3(4), Art. 26), with the edge cases of fine-tuning, building your own system, and the authorised representative under Art. 22.",
       "articleBody": "Under the EU AI Act, a provider is the party that develops an AI system or has it developed and places it on the market or puts it into service under its own name or trademark (Art. 3(3)), while a deployer uses an AI system under its authority for a professional purpose (Art. 3(4)). The responsibility split turns on who places the system on the market versus who operates it: the provider owns the build and conformity (Art. 25; Arts. 9 to 16), and the deployer owns correct use, human oversight and monitoring (Art. 26, Art. 27). One organisation can be both. This article maps each role to its articles and explains the edge cases, including fine-tuning someone else's model, building and deploying your own system, and the authorised representative a non-EU provider must appoint under Art. 22. For Annex III standalone high-risk systems, the high-risk deployer duties now apply from 2 December 2027 under the Digital Omnibus.",
@@ -772,7 +772,7 @@ export const geoPosts: GeoPost[] = [
       }
     ],
     "disclaimer": "<p>## Disclaimer (G1 / G3)</p><p>Disclaimer (G1 / G3): This article is for general informational purposes only. AIActRadar is a decision-support tool and does not provide legal advice or issue compliance certificates. For binding assessments, consult qualified EU legal counsel. Penalty figures (EU AI Act up to €35M or 7% of global annual turnover; GDPR up to €20M or 4%) are cited as publicly available reference points under Art. 99 and Art. 83 respectively — not predictions of any specific outcome.</p>",
-    "cta": "<p>Get the cited EU AI Act obligation tracker — free, decision-support only. Join the waitlist: <a href=\"https://aiactradar.vercel.app\" class=\"underline font-semibold\">try AIActRadar</a></p>",
+    "cta": "<p>Get the cited EU AI Act obligation tracker — free, decision-support only. Join the waitlist: <a href=\"https://aiactradar.lxsaihub.com\" class=\"underline font-semibold\">try AIActRadar</a></p>",
     "blogPosting": {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
@@ -788,12 +788,12 @@ export const geoPosts: GeoPost[] = [
         "name": "AIActRadar",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://aiactradar.vercel.app/logo.png"
+          "url": "https://aiactradar.lxsaihub.com/logo.png"
         }
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://aiactradar.vercel.app/blog/what-digital-omnibus-changed"
+        "@id": "https://aiactradar.lxsaihub.com/blog/what-digital-omnibus-changed"
       },
       "description": "What the EU AI Act Digital Omnibus actually changed: Annex III high-risk obligations move to 2 December 2027 and Annex I to 2 August 2028, while AI literacy, prohibitions, transparency and GPAI rules stay on their original schedules. A cited, decision-support explainer.",
       "articleBody": "The Digital Omnibus on AI is the EU amending regulation (Procedure 2025/0359(COD), COM(2025) 836) that adjusts when parts of the AI Act (Regulation (EU) 2024/1689) apply, not whether the Act exists. Standalone high-risk systems listed in Annex III now apply from 2 December 2027 instead of 2 August 2026; AI embedded in regulated products under Annex I moves to 2 August 2028. The Omnibus does not repeal the Act or rewrite the substantive obligations (Art. 9 risk management, Art. 10 data governance, Art. 11 technical documentation, Art. 13 transparency, Art. 14 human oversight, Art. 15 accuracy). AI literacy (Art. 4), prohibited practices (Art. 5), transparency (Art. 50) and GPAI rules (Art. 53/55, Chapter V) remain in force on their original schedules. For deployers, the always-on duties (Art. 4, Art. 26(1), Art. 26(6)+Art. 50, Art. 11/13) apply now; the heavy high-risk deployer duties phase in on 2 December 2027 for Annex III. This article maps each change to its article and explains the practical meaning for providers and deployers.",

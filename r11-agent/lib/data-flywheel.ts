@@ -47,7 +47,7 @@ const CONTRIB_DIR = path.join(__dirname, 'governance-data', 'contributed')
 const LOG = path.join(CONTRIB_DIR, 'feedback-log.jsonl')
 
 function ensureDir(): void {
-  if (!fs.existsSync(CONTRIB_DIR)) fs.mkdirSync(CONTRIB_DIR, { recursive: true })
+  try { if (!fs.existsSync(CONTRIB_DIR)) fs.mkdirSync(CONTRIB_DIR, { recursive: true }) } catch (e) { /* read-only FS (serverless): best effort */ }
 }
 
 function genId(): string {
@@ -67,7 +67,7 @@ export function loadContributed(status?: SignalStatus): ContributedSignal[] {
 export function writeback(signals: ContributedSignal[]): { written: number; path: string } {
   if (!signals.length) return { written: 0, path: LOG }
   ensureDir()
-  fs.appendFileSync(LOG, signals.map((s) => JSON.stringify(s)).join('\n') + '\n')
+  try { fs.appendFileSync(LOG, signals.map((s) => JSON.stringify(s)).join('\n') + '\n') } catch (e) { /* read-only FS (serverless): best effort */ }
   return { written: signals.length, path: LOG }
 }
 
@@ -84,7 +84,7 @@ export function setStatus(id: string, status: SignalStatus): boolean {
     }
     return JSON.stringify(s)
   })
-  fs.writeFileSync(LOG, out.join('\n') + (out.length ? '\n' : ''))
+  try { fs.writeFileSync(LOG, out.join('\n') + (out.length ? '\n' : '')) } catch (e) { /* read-only FS (serverless): best effort */ }
   return found
 }
 

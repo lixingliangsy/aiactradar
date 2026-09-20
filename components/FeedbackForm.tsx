@@ -29,12 +29,12 @@ export default function FeedbackForm() {
       });
       const json = await res.json();
       if (!res.ok) {
-        setError(json.error || "提交失败");
+        setError(json.error || "Submission failed");
         return;
       }
       setDone(true);
     } catch {
-      setError("网络错误");
+      setError("Network error");
     } finally {
       setLoading(false);
     }
@@ -43,10 +43,10 @@ export default function FeedbackForm() {
   if (done) {
     return (
       <div className="rounded-2xl border border-slate-200 bg-white p-6 text-center">
-        <p className="text-lg font-semibold text-slate-900">感谢你的反馈！</p>
-        <p className="mt-1 text-sm text-slate-600">我们已收到，团队会尽快处理。你也可随时再来提交。</p>
+        <p className="text-lg font-semibold text-slate-900">Thank you for your feedback!</p>
+        <p className="mt-1 text-sm text-slate-600">We have received it and the team will follow up shortly. You can submit another one any time.</p>
         <button onClick={() => { setDone(false); setBody(""); setFile(null); }} className="mt-4 rounded-lg border border-slate-300 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
-          再提交一条
+          Submit another
         </button>
       </div>
     );
@@ -55,33 +55,33 @@ export default function FeedbackForm() {
   return (
     <form onSubmit={submit} className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6">
       <div>
-        <label htmlFor="cat" className="block text-sm font-medium text-slate-700">分类</label>
+        <label htmlFor="cat" className="block text-sm font-medium text-slate-700">Category</label>
         <select id="cat" value={category} onChange={(e) => setCategory(e.target.value)}
           className="mt-1 w-full rounded-lg border border-slate-300 p-2 text-sm focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/30">
           {FEEDBACK_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
       </div>
       <div>
-        <label htmlFor="fb" className="block text-sm font-medium text-slate-700">反馈内容</label>
+        <label htmlFor="fb" className="block text-sm font-medium text-slate-700">Your feedback</label>
         <textarea id="fb" required rows={5} value={body} onChange={(e) => setBody(e.target.value)}
-          placeholder="请描述你的建议或遇到的问题…"
+          placeholder="Describe your suggestion or the problem you ran into..."
           className="mt-1 w-full rounded-lg border border-slate-300 p-2 text-sm focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/30" />
       </div>
       <div>
-        <label htmlFor="em" className="block text-sm font-medium text-slate-700">联系邮箱（可选）</label>
+        <label htmlFor="em" className="block text-sm font-medium text-slate-700">Contact email (optional)</label>
         <input id="em" type="email" value={email} onChange={(e) => setEmail(e.target.value)}
           placeholder="you@example.com"
           className="mt-1 w-full rounded-lg border border-slate-300 p-2 text-sm focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/30" />
       </div>
       <div>
-        <label htmlFor="att" className="block text-sm font-medium text-slate-700">附件（可选）</label>
+        <label htmlFor="att" className="block text-sm font-medium text-slate-700">Attachment (optional)</label>
         <input id="att" type="file" onChange={(e) => setFile(e.target.files?.[0] || null)}
           className="mt-1 w-full text-sm text-slate-600" />
       </div>
       {error && <p role="alert" className="text-sm text-orange-700">{error}</p>}
       <button type="submit" disabled={loading}
         className="w-full rounded-lg bg-teal-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-teal-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-2 disabled:opacity-60">
-        {loading ? "提交中…" : "提交反馈"}
+        {loading ? "Submitting..." : "Submit feedback"}
       </button>
     </form>
   );

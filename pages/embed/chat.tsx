@@ -1,6 +1,3 @@
-/**
- * pages/embed/chat.tsx —— 客服组件的全屏宿主页
- */
 import ChatWidget from "../../components/ChatWidget";
 import { SUPPORT } from "../../lib/support.config";
 

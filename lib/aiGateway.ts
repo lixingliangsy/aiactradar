@@ -28,7 +28,7 @@ type UsageFile = {
 
 function usagePath(slug: string): string {
   const dir = path.join(process.cwd(), '.data')
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+  try { if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true }) } catch (e) { /* read-only FS (serverless): best effort */ }
   return path.join(dir, `ai-usage-${slug}.json`)
 }
 
@@ -53,7 +53,7 @@ function load(slug: string): UsageFile {
 }
 
 function save(slug: string, u: UsageFile) {
-  fs.writeFileSync(usagePath(slug), JSON.stringify(u), 'utf8')
+  try { fs.writeFileSync(usagePath(slug), JSON.stringify(u), 'utf8') } catch (e) { /* read-only FS (serverless): best effort */ }
 }
 
 function parsePlan(raw: string): AiPlan | null {
@@ -163,4 +163,60 @@ export function checkAndConsumeQuota(slug: string, plan: AiPlan = 'free'): Quota
 
 export function defaultModel(): string {
   return process.env.OPENAI_MODEL || 'gpt-4o-mini'
+}
+
+
+// ---- model fallback (P0, 2026-09-18) ----
+// Primary model (OPENAI_MODEL) with automatic fail-over to BACKUP_MODEL on
+// 5xx / 429 / network error / empty completion. 4xx (bad request / auth) fails fast.
+// Does NOT depend on defaultModel() so it compiles in every product's aiGateway.
+export const BACKUP_MODEL = process.env.OPENAI_MODEL_FALLBACK || 'nemotron-3.5-lightning-30b-a3b'
+
+export async function chatWithFallback(
+  apiKey: string,
+  base: string,
+  messages: { role: string; content: string }[],
+  opts: { model?: string; temperature?: number; maxTokens?: number; backupModel?: string } = {},
+): Promise<string> {
+  const primary = opts.model || process.env.OPENAI_MODEL || 'nvidia/nemotron-3-super-120b-a12b'
+  const backup = opts.backupModel || BACKUP_MODEL
+  const order = Array.from(new Set([primary, backup].filter(Boolean)))
+  let lastErr = 'unknown'
+  for (let i = 0; i < order.length; i++) {
+    const m = order[i]
+    try {
+      const r = await fetch(`${base}/chat/completions`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
+        body: JSON.stringify({
+          model: m,
+          messages,
+          temperature: opts.temperature ?? 0.7,
+          max_tokens: opts.maxTokens ?? 1000,
+        }),
+      })
+      if (!r.ok) {
+        const t = await r.text().catch(() => '')
+        if (r.status >= 500 || r.status === 429) {
+          lastErr = `model ${m} HTTP ${r.status}`
+          if (i < order.length - 1) continue
+          throw new Error('AI request failed: ' + lastErr.slice(0, 160))
+        }
+        throw new Error('AI request failed: ' + t.slice(0, 160))
+      }
+      const data = await r.json()
+      const text = data?.choices?.[0]?.message?.content || ''
+      if (!text.trim()) {
+        lastErr = `model ${m} empty response`
+        if (i < order.length - 1) continue
+        throw new Error('Empty AI response')
+      }
+      return text
+    } catch (e: any) {
+      if (i >= order.length - 1) throw new Error('AI service call failed: ' + (e?.message || lastErr))
+      lastErr = e?.message || lastErr
+      continue
+    }
+  }
+  throw new Error('AI service call failed: ' + lastErr)
 }

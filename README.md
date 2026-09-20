@@ -1,35 +1,14 @@
-# AIActRadar
+# AIActRadar by LX AI
 
-> Turn EU AI Act chaos into a clear compliance roadmap.
->
-> AIActRadar maps your AI systems to their EU AI Act obligations, auto-generates risk registers and technical documentation, and keeps you ahead of every phased compliance deadline.
+EU AI Act compliance radar: map your AI system to obligations, deadlines, and templates across roles and risk tiers.
 
-AI-powered micro-SaaS — part of the OPC product factory. Web-first (Next.js 14),
-deployable to Vercel, subscription-ready.
+Part of the [LX AI Micro-SaaS Factory](https://lxsaihub.com) — a studio shipping focused developer & compliance tools.
 
-## Run locally
+- Live product: https://aiactradar.lxsaihub.com
+- Factory home: https://lxsaihub.com
 
-```bash
-npm install
-cp .env.example .env.local   # optional: add OPENAI_API_KEY for real AI
-npm run dev                  # http://localhost:3000
-```
+AIActRadar helps teams ship safer software without a compliance or security hire.
+Built with Next.js. Subscriptions are processed via Waffo.
 
-Without an API key the app runs in **Mock mode** (returns a demo output).
-
-## Build & deploy (Vercel)
-
-```bash
-npm run build
-# Vercel: import repo, set framework = Next.js, root = 12_Micro_SaaS出海/aiactradar
-```
-
-## Payments (subscription)
-
-Wire Stripe or Waffo in `pages/api/checkout` (template not included — add per product).
-Web-first checkout keeps fees at 2–5% and avoids the 30% app-store cut.
-
-## Config
-
-All product-specific text lives in `lib/product.ts` (name, inputs, system prompt,
-pricing, mock). To clone a new product, copy this folder and edit `lib/product.ts`.
+> Maintained by LX AI (李星亮). This project is not affiliated with any
+> similarly named third-party product or organization.

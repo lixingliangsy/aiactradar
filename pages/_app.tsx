@@ -12,7 +12,17 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>{SUPPORT.productName} · EU AI Act 合规雷达</title>
+        <title>{SUPPORT.productName} · EU AI Act compliance radar</title>
+              <meta property="og:type" content="website" />
+        <meta property="og:title" content="AIActRadar" />
+        <meta property="og:description" content="AIActRadar maps your AI systems to their EU AI Act obligations, auto-generates risk registers and technical documentation, and keeps you ahead of every phased compliance deadline." />
+        <meta property="og:url" content="https://aiactradar.lxsaihub.com/" />
+        <meta property="og:image" content="https://aiactradar.lxsaihub.com/og.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="AIActRadar" />
+        <meta name="twitter:description" content="AIActRadar maps your AI systems to their EU AI Act obligations, auto-generates risk registers and technical documentation, and keeps you ahead of every phased compliance deadline." />
+        <meta name="twitter:image" content="https://aiactradar.lxsaihub.com/og.png" />
+                                        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: '{"@context":"https://schema.org","@type":"SoftwareApplication","name":"AIActRadar","url":"https://aiactradar.lxsaihub.com/","description":"AIActRadar maps your AI systems to their EU AI Act obligations, auto-generates risk registers and technical documentation, and keeps you ahead of every phased compliance deadline.","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"Offer","priceCurrency":"USD","price":"0","availability":"https://schema.org/OnlineOnly"}}' }} />
       </Head>
       {UMAMI_ID && (
         <Script

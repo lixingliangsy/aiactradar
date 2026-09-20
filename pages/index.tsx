@@ -1,6 +1,7 @@
 import React, { FormEvent, useEffect, useMemo, useState } from 'react'
 import Head from 'next/head'
 import { PRODUCT } from '../lib/product'
+import { buildProductJsonLd } from '../lib/schema'
 
 type Lead = {
   id: string
@@ -294,14 +295,14 @@ export default function Home() {
         <meta property="og:type" content="website" />
         <meta property="og:title" content={`${PRODUCT.name} — ${PRODUCT.tagline}`} />
         <meta property="og:description" content={PRODUCT.description} />
-        <meta property="og:image" content="https://aiactradar.com/og-image.png" />
-        <meta property="og:url" content="https://aiactradar.com/" />
+        <meta property="og:image" content="https://aiactradar.lxsaihub.com/og-image.png" />
+        <meta property="og:url" content="https://aiactradar.lxsaihub.com/" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${PRODUCT.name} — ${PRODUCT.tagline}`} />
         <meta name="twitter:description" content={PRODUCT.description} />
-        <meta name="twitter:image" content="https://aiactradar.com/og-image.png" />
-        <link rel="canonical" href="https://aiactradar.com/" />
-        <link rel="alternate" type="text/plain" href="https://aiactradar.com/llms.txt" title="LLM manifest" />
+        <meta name="twitter:image" content="https://aiactradar.lxsaihub.com/og-image.png" />
+        <link rel="canonical" href="https://aiactradar.lxsaihub.com/" />
+        <link rel="alternate" type="text/plain" href="https://aiactradar.lxsaihub.com/llms.txt" title="LLM manifest" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -309,8 +310,9 @@ export default function Home() {
               '@context': 'https://schema.org',
               '@type': 'SoftwareApplication',
               name: PRODUCT.name,
+              dateModified: '2026-09-11',
               description: PRODUCT.description,
-              url: 'https://aiactradar.com/',
+              url: 'https://aiactradar.lxsaihub.com/',
               applicationCategory: 'BusinessApplication',
               operatingSystem: 'Web',
               offers: [
@@ -319,10 +321,145 @@ export default function Home() {
                 { '@type': 'Offer', name: 'Agent', price: String((PRODUCT as any).agentPriceMonthly ?? 99), priceCurrency: 'USD' },
                 { '@type': 'Offer', name: 'Agent Suite', price: String((PRODUCT as any).suitePriceMonthly ?? 199), priceCurrency: 'USD' },
               ],
-              creator: { '@type': 'Organization', name: 'AIActRadar', url: 'https://aiactradar.com/' },
+              alternateName: `${PRODUCT.name} by LX AI`,
+              sameAs: ['https://lxsaihub.com/tools/aiactradar.html'],
+              creator: { '@type': 'Organization', name: 'AIActRadar', url: 'https://aiactradar.lxsaihub.com/' },
             }),
           }}
         />
+                <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@graph": [
+                {
+                        "@type": "Organization",
+                        "@id": "https://aiactradar.lxsaihub.com/#organization",
+                        "name": "AIActRadar",
+                        "alternateName": "AIActRadar by LX AI",
+                        "url": "https://aiactradar.lxsaihub.com/",
+                        "logo": "https://aiactradar.lxsaihub.com/og-cover.svg",
+                        "sameAs": [
+                                "https://lxsaihub.com/tools/aiactradar.html",
+                                "https://lxsaihub.com/"
+                        ]
+                },
+                {
+                        "@type": "WebSite",
+                        "@id": "https://aiactradar.lxsaihub.com/#website",
+                        "url": "https://aiactradar.lxsaihub.com/",
+                        "name": "AIActRadar",
+                        "publisher": {
+                                "@id": "https://aiactradar.lxsaihub.com/#organization"
+                        },
+                        "inLanguage": "en",
+                        "potentialAction": {
+                                "@type": "SearchAction",
+                                "target": {
+                                        "@type": "EntryPoint",
+                                        "urlTemplate": "https://aiactradar.lxsaihub.com/?q={search_term_string}"
+                                },
+                                "query-input": "required name=search_term_string"
+                        }
+                },
+                {
+                        "@type": "FAQPage",
+                        "@id": "https://aiactradar.lxsaihub.com/#faq",
+                        "inLanguage": "en",
+                        "mainEntity": [
+                                {
+                                        "@type": "Question",
+                                        "name": "What is AIActRadar?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "AIActRadar maps your AI system to the obligations of the EU AI Act (Regulation 2024/1689) and produces a risk register, a technical-documentation checklist, and a calendar of key deadlines."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "How does it classify risk?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "It places your system into one of four tiers — unacceptable, high-risk, limited-risk, or minimal-risk — based primarily on Annex III use cases."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "What are the key EU AI Act deadlines?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "Prohibited practices (Art. 5): 2 Feb 2025. GPAI obligations: 2 Aug 2025. Transparency (Art. 50) and GPAI enforcement: 2 Aug 2026. AI-generated-content watermarking / NCIC ban: 2 Dec 2026. High-risk (Annex III) obligations: 2 Dec 2027 under the Digital Omnibus (Reg (EU) 2026/1744, in force 27 Jul 2026)."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "How much does it cost?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "Free ($0) includes one run per day with a watermarked export. Pro is $59/mo, the Agent plan is $99/mo, and Agent Suite is $199/mo."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "Does AIActRadar give legal advice?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "No. It is decision-support only; official dates and obligations should always be confirmed against EUR-Lex."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "Which obligations does it map?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "Article 9 (risk management), Article 11 (technical documentation), Article 14 (human oversight), Article 43 (conformity assessment), and related transparency duties."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "Who is it for?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "Organizations in the EU and US deploying or providing AI systems, plus independent AI product teams needing a fast compliance read."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "Can I export the results?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "Yes. You can export a PDF risk register and obligation checklist to share with auditors or clients."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "Does it monitor regulatory change?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "Yes. Rule changes trigger alerts so your compliance posture stays current as the Act evolves."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "Is the output a certificate of compliance?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "No. AIActRadar produces an analytical read-out; formal conformity assessment still requires the notified-body process where applicable."
+                                        }
+                                }
+                        ]
+                }
+        ]
+})
+          }}
+        />
+              <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildProductJsonLd(PRODUCT, "https://aiactradar.lxsaihub.com")) }}
+        />
+              <link rel="alternate" hrefLang="en" href="https://aiactradar.lxsaihub.com/" />
+        <link rel="alternate" hrefLang="x-default" href="https://aiactradar.lxsaihub.com/" />
       </Head>
 
       <div className="min-h-screen bg-white text-slate-900">
@@ -369,6 +506,14 @@ export default function Home() {
             <div>
               <div className="text-xs font-bold tracking-widest uppercase text-indigo-600 mb-3">Micro SaaS</div>
               <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">{PRODUCT.tagline}</h1>
+              <div className="mt-6 bg-white border border-slate-200 rounded-xl p-5 max-w-2xl" data-geo="key-takeaways">
+                <p className="text-sm font-bold text-indigo-900 uppercase tracking-wide mb-2">Key Takeaways</p>
+                <ul className="list-disc pl-5 space-y-1 text-slate-700 text-[15px] leading-relaxed">
+                        <li>Maps your AI systems to their exact EU AI Act obligations and phased deadlines.</li>
+                        <li>Auto-generates risk registers and technical documentation ready for review.</li>
+                        <li>Start free; upgrade to the full compliance roadmap from $59/month.</li>
+                </ul>
+              </div>
               <p className="text-lg text-slate-600 mb-6">{PRODUCT.description}</p>
               <div className="flex flex-wrap gap-3">
                 <a href="#signup" className="px-6 py-3 rounded-full bg-indigo-600 text-white font-bold">Start Free Trial</a>
@@ -408,7 +553,16 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="features" className="py-20">
+        
+        <section id="definition" className="py-20 bg-slate-50">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="text-xs font-bold tracking-widest uppercase text-indigo-600 mb-3">What it is</div>
+            <h2 className="text-3xl md:text-4xl font-extrabold mb-4">AIActRadar — definition</h2>
+            <p className="text-lg text-slate-600 max-w-3xl">{(PRODUCT as any).definitionLead}</p>
+          </div>
+        </section>
+
+<section id="features" className="py-20">
           <div className="max-w-6xl mx-auto px-6">
             <div className="text-center mb-12">
               <div className="text-xs font-bold tracking-widest uppercase text-indigo-600 mb-3">Why {PRODUCT.name}</div>
@@ -726,6 +880,21 @@ export default function Home() {
           </div>
         </section>
 
+        
+        <section id="geo-faq" className="py-16 bg-white">
+          <div className="max-w-6xl mx-auto px-6">
+            <h2 className="text-3xl font-extrabold mb-8">{PRODUCT.name} — frequently asked questions</h2>
+            <div className="space-y-3">
+              {((PRODUCT as any).geoFaq || []).map((f: { q?: string; a?: string }) => (
+                <details key={f.q} className="rounded-xl border border-slate-200 p-4">
+                  <summary className="font-semibold cursor-pointer">{f.q}</summary>
+                  <p className="mt-2 text-slate-600 text-sm">{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section id="faq" className="py-20 bg-slate-50">
           <div className="max-w-3xl mx-auto px-6">
             <h2 className="text-3xl font-extrabold text-center mb-10">FAQ</h2>
@@ -827,7 +996,16 @@ export default function Home() {
           </div>
         </section>
 
-        <footer className="border-t border-slate-200 py-10">
+        <section className="max-w-3xl mx-auto px-6 py-10" data-geo="related-reading">
+      <h2 className="text-xl font-bold text-slate-900 mb-3">Related reading</h2>
+      <ul className="space-y-1 text-[15px]">
+      <li><a href="https://lxsaihub.com/blog/eu-ai-act-compliance-checklist.html" className="text-indigo-700 hover:underline">EU AI Act compliance checklist</a> &mdash; the dates that actually bind you.</li>
+      <li><a href="https://lxsaihub.com/blog/what-is-geo.html" className="text-indigo-700 hover:underline">What is GEO</a> &mdash; how to get cited by ChatGPT & Perplexity.</li>
+      <li><a href="https://lxsaihub.com/blog/wave1-launch.html" className="text-indigo-700 hover:underline">Wave 1 launch</a> &mdash; AIActRadar & AgentRedTeam go live.</li>
+      </ul>
+    </section>
+
+<footer className="border-t border-slate-200 py-10">
           <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-8 text-sm">
             <div>
               <div className="font-extrabold text-lg mb-2">{PRODUCT.name}</div>

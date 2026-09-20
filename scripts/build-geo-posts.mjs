@@ -7,8 +7,8 @@ import path from 'path'
 
 const ARTICLES_DIR = 'E:/AgentCPM/07_一人公司出海项目/opc-doc/outputs/07-conversion/articles'
 const OUT_TS = 'E:/AgentCPM/07_一人公司出海项目/12_Micro_SaaS出海/aiactradar/data/geoPosts.ts'
-const PROD_URL = 'https://aiactradar.vercel.app'
-const LIVE_DOMAIN = 'https://aiactradar.vercel.app'
+const PROD_URL = 'https://aiactradar.lxsaihub.com'
+const LIVE_DOMAIN = 'https://aiactradar.lxsaihub.com'
 
 function readFileSafe(p) {
   try { return fs.readFileSync(p, 'utf8') } catch { return null }

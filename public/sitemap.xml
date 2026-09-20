@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://aiactradar.com/</loc><priority>1.0</priority></url>
-  <url><loc>https://aiactradar.com/pricing.html</loc><priority>0.8</priority></url>
-  <url><loc>https://aiactradar.com/faq.html</loc><priority>0.6</priority></url>
+  <url><loc>https://aiactradar.lxsaihub.com/</loc><priority>1.0</priority></url>
+  <url><loc>https://aiactradar.lxsaihub.com/blog</loc><priority>0.7</priority></url>
+  <url><loc>https://aiactradar.lxsaihub.com/llms.txt</loc><priority>0.4</priority></url>
+  <url><loc>https://aiactradar.lxsaihub.com/blog/eu-ai-act-risk-tiers-primer-2026.html</loc><priority>0.6</priority></url>
+  <url><loc>https://aiactradar.lxsaihub.com/blog/ai-act-technical-documentation-checklist-2026.html</loc><priority>0.6</priority></url>
 </urlset>

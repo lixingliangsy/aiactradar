@@ -62,7 +62,7 @@ function markSeen(id: string) {
   try {
     const seen = loadJson(SEEN_FILE)
     seen[id] = Date.now()
-    fs.writeFileSync(SEEN_FILE, JSON.stringify(seen))
+    try { fs.writeFileSync(SEEN_FILE, JSON.stringify(seen)) } catch (e) { /* read-only FS (serverless): best effort */ }
   } catch {
     /* non-fatal */
   }
@@ -91,13 +91,13 @@ function logEvent(e: any) {
       mode: e.mode, // "test" | "prod"
       email: d.buyerEmail || '',
       slug: meta.slug || d.productName || '',
-      plan: meta.plan || d.billingPeriod || '',
+      plan: meta.plan || d.productName || '',
       amount: d.amount || '',
       currency: d.currency || '',
       orderId: d.orderId || '',
       provisioning: 'RECEIVED', // audit trail; fulfillment handled below
     }
-    fs.appendFileSync(EVENT_LOG, JSON.stringify(row) + '\n')
+    try { fs.appendFileSync(EVENT_LOG, JSON.stringify(row) + '\n') } catch (e) { /* read-only FS (serverless): best effort */ }
     console.log('[webhook][received]', JSON.stringify(row))
   } catch {
     /* non-fatal */
@@ -112,7 +112,7 @@ function fulfillOrder(e: any) {
   const orderId = d.orderId || ''
   const email = d.buyerEmail || ''
   const slug = meta.slug || d.productName || ''
-  const plan = meta.plan || d.billingPeriod || ''
+  const plan = meta.plan || d.productName || ''
   if (!orderId || alreadyFulfilled(orderId)) return
   const row = {
     orderId,
@@ -124,7 +124,7 @@ function fulfillOrder(e: any) {
     ts: e.timestamp,
   }
   try {
-    fs.appendFileSync(FULFILLED_FILE, JSON.stringify(row) + '\n')
+    try { fs.appendFileSync(FULFILLED_FILE, JSON.stringify(row) + '\n') } catch (e) { /* read-only FS (serverless): best effort */ }
   } catch {
     /* non-fatal */
   }

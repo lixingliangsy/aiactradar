@@ -22,7 +22,7 @@ export const PRODUCT = {
   suiteProductId: "PROD_5OQNwcO7sQBI6AKI5U94YM",
   suitePriceMonthly: 199,
 
-  checkoutUrl: "https://pancake.waffo.ai/store/lixingliang-ai-tools-6cilbw8v/checkout/cs_b39faceb-eb1d-a82a-f6e0-8474e525cad9?utm_campaign=r11_launch&utm_content=aiactradar&utm_source=x&utm_medium=organic",
+  checkoutUrl: "/api/checkout",
   pipelineId: "aiactradar-obligation-v1",
   rulesetId: "eu-ai-act@2026-07-19",
   rulesetVersion: "eu-ai-act@2026-07-19",
@@ -31,6 +31,15 @@ export const PRODUCT = {
   toolTitle: "EU AI Act Tracker",
   resultLabel: "Compliance Status",
   ctaLabel: "Run Check",
+  definitionLead: "AIActRadar maps AI systems to EU AI Act risk tiers and phased obligations, producing a decision-support compliance roadmap with rule-based checks — not a legal certificate.",
+  geoFaq: [
+    { q: "What is the EU AI Act risk taxonomy?", a: "The Act classifies systems as prohibited, high-risk, limited-risk (transparency), or minimal risk. Official text: Regulation (EU) 2024/1689." },
+    { q: "Does AIActRadar issue a certificate?", a: "No. It is decision-support documentation aid. Legal conformity assessment remains with you and qualified counsel." },
+    { q: "Which obligations does it track?", a: "Risk classification, technical documentation outlines, and phased deadline awareness mapped to publicly published timelines." },
+    { q: "Is live AI required?", a: "Demo mode works without a key. Live narrative needs a configured platform or enterprise BYOK key under fair use." },
+    { q: "Who is it for?", a: "Product and compliance teams shipping AI features to the EU who need an obligation checklist, not a law firm substitute." },
+    { q: "Where are primary sources?", a: "EUR-Lex Regulation (EU) 2024/1689 and European Commission AI Act guidance pages." },
+  ],
   features: [
   "Classify your AI system's risk tier under the EU AI Act",
   "Map the obligations and deadlines that apply to you",

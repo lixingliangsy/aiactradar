@@ -1,3 +1,7 @@
 User-agent: *
 Allow: /
-Sitemap: https://aiactradar.com/sitemap.xml
+
+# LLM / AI answer-engine indexing
+LLM-Content: https://aiactradar.lxsaihub.com/llms.txt
+
+Sitemap: https://aiactradar.lxsaihub.com/sitemap.xml

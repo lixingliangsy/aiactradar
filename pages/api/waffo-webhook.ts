@@ -151,7 +151,7 @@ export function recordDelivery(r: {
 }) {
   try {
     const row = { eventId: r.eventId, orderId: r.orderId, type: r.type, amount: r.amount, currency: r.currency, ts: Date.now() }
-    fs.appendFileSync(DELIVERY_LOG, JSON.stringify(row) + '\n')
+    try { fs.appendFileSync(DELIVERY_LOG, JSON.stringify(row) + '\n') } catch (e) { /* read-only FS (serverless): best effort */ }
   } catch (e) {
     console.error('[waffo-webhook] delivery log write failed', e)
   }

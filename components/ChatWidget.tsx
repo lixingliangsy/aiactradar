@@ -2,17 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 
-/**
- * components/ChatWidget.tsx —— 可嵌入 AI 客服聊天组件
- *
- * - 浮动入口（embed=false）或全屏（embed=true，用于 /embed/chat iframe）。
- * - sessionId 持久化于 localStorage，刷新不丢上下文；按 productSlug 隔离避免多产品串台。
- * - 展示知识库引用（cite）与「转人工」横幅，符合诚实护栏红线。
- *
- * 多产品复用：通过 props 注入 productName/title/greeting/sessionKeyPrefix/brandColor；
- * GStack 实例使用默认值，AIActRadar / AgentRedTeam 在各自 _app.tsx 传入独立 props 即可。
- */
-
 interface Citation {
   id: string;
   title: string;
@@ -27,15 +16,15 @@ interface ChatMsg {
 
 interface ChatWidgetProps {
   embed?: boolean;
-  /** 产品中文名，用于问候语；默认"GStack" */
+  
   productName?: string;
-  /** 顶部标题文案；默认 `${productName} AI 客服` */
+  
   title?: string;
-  /** 首条问候语；默认基于 productName 拼接 */
+  
   greeting?: string;
-  /** localStorage session key 前缀，避免多产品串台；默认 "gstack_chat_session" */
+  
   sessionKeyPrefix?: string;
-  /** 品牌主色，默认 #2563EB */
+  
   brandColor?: string;
 }
 
@@ -44,14 +33,14 @@ const DEFAULT_ORANGE = "#EA580C";
 
 export default function ChatWidget({
   embed = false,
-  productName = "GStack",
+  productName = "Support",
   title,
   greeting,
-  sessionKeyPrefix = "gstack",
+  sessionKeyPrefix = "support",
   brandColor = DEFAULT_BRAND,
 }: ChatWidgetProps) {
-  const headerTitle = title || `${productName} AI 客服`;
-  const defaultGreeting = `你好，我是 ${productName} 的 AI 客服助手。关于产品、定价、支付、账户或出海合规扫描，都可以问我；需要人工时告诉我「转人工」即可。`;
+  const headerTitle = title || `${productName} AI Assistant`;
+  const defaultGreeting = `Hi, I'm ${productName}'s AI assistant. Ask me about the product, pricing, payments, your account, or the market-access scan — and type "human" if you'd like to talk to a person.`;
   const SESSION_KEY = `${sessionKeyPrefix}_chat_session`;
 
   const [open, setOpen] = useState(embed);
@@ -107,14 +96,14 @@ export default function ChatWidget({
       if (!res.ok) {
         setMessages((m) => [
           ...m,
-          { role: "assistant", text: `（服务暂时不可用：${data?.code || res.status}）请稍后再试，或直接转人工。` },
+          { role: "assistant", text: `(Service temporarily unavailable (${data?.code || res.status}). Please try again later, or type "human" to reach a person.)` },
         ]);
       } else {
         setMessages((m) => [
           ...m,
           {
             role: "assistant",
-            text: data.answer || "（无答复）",
+            text: data.answer || "(No response)",
             citations: data.citations || [],
             escalated: !!data.escalated,
           },
@@ -123,7 +112,7 @@ export default function ChatWidget({
     } catch {
       setMessages((m) => [
         ...m,
-        { role: "assistant", text: "（网络错误）请检查连接，或告诉我「转人工」。" },
+        { role: "assistant", text: "(Network error) Check your connection, or type \"human\" to reach a person." },
       ]);
     } finally {
       setLoading(false);
@@ -169,7 +158,7 @@ export default function ChatWidget({
           <button
             onClick={() => setOpen(false)}
             style={{ marginLeft: "auto", background: "transparent", border: 0, color: "#fff", fontSize: 18, cursor: "pointer", lineHeight: 1 }}
-            aria-label="关闭"
+            aria-label="Close"
           >
             ×
           </button>
@@ -208,13 +197,13 @@ export default function ChatWidget({
               )}
               {m.escalated && (
                 <div style={{ marginTop: 6, fontSize: 12, color: DEFAULT_ORANGE }}>
-                  ⚠️ 已为你转人工，我们会通过邮件联系。
+                  ⚠️ We've connected you with a human agent. We'll follow up by email.
                 </div>
               )}
             </div>
           </div>
         ))}
-        {loading && <div style={{ fontSize: 13, color: "#64748b" }}>助手正在输入…</div>}
+        {loading && <div style={{ fontSize: 13, color: "#64748b" }}>Assistant is typing…</div>}
       </div>
 
       <div style={{ display: "flex", gap: 8, padding: 12, borderTop: "1px solid #e2e8f0", background: "#fff" }}>
@@ -223,7 +212,7 @@ export default function ChatWidget({
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={onKey}
           rows={1}
-          placeholder="输入你的问题…（Enter 发送）"
+          placeholder="Type your question… (Enter to send)"
           style={{ flex: 1, resize: "none", border: "1px solid #cbd5e1", borderRadius: 8, padding: "8px 10px", fontSize: 14, fontFamily: "inherit" }}
         />
         <button
@@ -231,7 +220,7 @@ export default function ChatWidget({
           disabled={loading}
           style={{ background: DEFAULT_ORANGE, color: "#fff", border: 0, borderRadius: 8, padding: "0 16px", fontWeight: 600, cursor: loading ? "not-allowed" : "pointer" }}
         >
-          发送
+          Send
         </button>
       </div>
     </div>
@@ -246,7 +235,7 @@ export default function ChatWidget({
       )}
       <button
         onClick={() => setOpen((o) => !o)}
-        aria-label="打开 AI 客服"
+        aria-label="Open AI assistant"
         style={{
           position: "fixed",
           right: 20,

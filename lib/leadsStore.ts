@@ -21,7 +21,7 @@ const FILE = path.join(DATA_DIR, 'leads.json')
 
 function ensure() {
   try {
-    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true })
+    try { if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true }) } catch (e) { /* read-only FS (serverless): best effort */ }
     if (!fs.existsSync(FILE)) fs.writeFileSync(FILE, '[]', 'utf-8')
   } catch (e) {
     // Read-only FS (e.g. static build) — lead capture still works via webhook.
@@ -42,7 +42,7 @@ export function listLeads(): Lead[] {
 export function saveLeads(rows: Lead[]) {
   ensure()
   try {
-    fs.writeFileSync(FILE, JSON.stringify(rows, null, 2), 'utf-8')
+    try { fs.writeFileSync(FILE, JSON.stringify(rows, null, 2), 'utf-8') } catch (e) { /* read-only FS (serverless): best effort */ }
   } catch (e) {
     // Non-fatal: on serverless the file may not persist; webhook keeps the truth.
     console.warn('[leadsStore] save failed (non-fatal):', (e as any)?.message)

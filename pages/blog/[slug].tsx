@@ -22,7 +22,7 @@ export default function GeoPostPage({ post }: { post: any }) {
       <Head>
         <title>{`${post.title} — AIActRadar`}</title>
         <meta name="description" content={post.description} />
-        <link rel="canonical" href={`https://aiactradar.vercel.app/blog/${post.slug}`} />
+        <link rel="canonical" href={`https://aiactradar.lxsaihub.com/blog/${post.slug}`} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(post.blogPosting) }}

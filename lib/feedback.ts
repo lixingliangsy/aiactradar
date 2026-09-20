@@ -1,28 +1,8 @@
-/**
- * lib/feedback.ts —— 用户反馈存储 + 邮件发送（含失败重试与队列）
- *
- * 红线（沿用 AIActRadar）：
- * - 反馈一律先落库（store），绝不因邮件失败而丢失用户反馈。
- * - 邮件发送失败 → 指数退避重试（5s / 30s）→ 仍失败则入队列（.data/feedback-queue.jsonl），后台可重发。
- * - 发送在后台异步进行，不阻塞用户提交响应。
- */
+/** Persist support feedback first. Email is optional and never blocks the reply. */
 import path from "path";
 import fs from "fs";
 import { getStore, uid, type Entity } from "./store";
 import { FEEDBACK_CATEGORIES } from "./feedback-constants";
-
-// 懒加载 nodemailer（避免在未安装该依赖的项目里被顶层 import 直接打断）
-type Transporter = { sendMail: (opts: any) => Promise<any> };
-let _nm: any = null;
-function loadNodemailer(): any {
-  if (_nm !== null) return _nm;
-  try {
-    _nm = require("nodemailer");
-  } catch {
-    _nm = false; // 标记为不可用
-  }
-  return _nm;
-}
 
 export { FEEDBACK_CATEGORIES };
 export type FeedbackStatus = "received" | "emailed" | "queued" | "failed";
@@ -54,7 +34,7 @@ export function submitFeedback(input: {
   email?: string;
   attachment?: { name: string; data: string }; // base64
 }): Feedback {
-  const category = validCategory(input.category) ? input.category : "其他";
+  const category = validCategory(input.category) ? input.category : "Other";
   const body = String(input.body || "").trim();
   if (body.length < 5) throw new Error("BODY_TOO_SHORT");
   if (body.length > 5000) throw new Error("BODY_TOO_LONG");
@@ -70,7 +50,7 @@ export function submitFeedback(input: {
     updatedAt: new Date().toISOString(),
   };
 
-  // 附件：解码 base64 落盘（dev 用 .data/uploads，prod 改 CloudBase/对象存储）
+  // Attachment: decode base64 to disk (dev: .data/uploads, prod: CloudBase / object storage)
   if (input.attachment && input.attachment.name && input.attachment.data) {
     try {
       fs.mkdirSync(UPLOAD_DIR, { recursive: true });
@@ -97,48 +77,59 @@ export async function setStatus(id: string, status: FeedbackStatus): Promise<voi
   await getStore().update<Feedback>(COLL, id, { status, updatedAt: new Date().toISOString() });
 }
 
-// --- 邮件发送（server-only，nodemailer） ---
-let _transporter: Transporter | null = null;
-function getTransporter(): Transporter | null {
+type MailTransporter = { sendMail: (opts: Record<string, string>) => Promise<unknown> };
+
+let _transporter: MailTransporter | null = null;
+async function getTransporter(): Promise<MailTransporter | null> {
   if (_transporter) return _transporter;
-  const nm = loadNodemailer();
-  if (!nm) return null;
   const host = process.env.SMTP_HOST;
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
   if (!host || !user || !pass) return null;
-  _transporter = nm.createTransport({
-    host,
-    port: Number(process.env.SMTP_PORT || 587),
-    secure: process.env.SMTP_SECURE === "1",
-    auth: { user, pass },
-  });
-  return _transporter;
+  try {
+    // Optional SMTP dep. String is split so tsc/webpack do not require the package.
+    const spec = "node" + "mailer";
+    const loader = new Function("id", "return import(id)") as (id: string) => Promise<{
+      default?: { createTransport: (opts: Record<string, unknown>) => MailTransporter };
+      createTransport?: (opts: Record<string, unknown>) => MailTransporter;
+    }>;
+    const mod = await loader(spec);
+    const nm = mod.default || mod;
+    if (!nm.createTransport) return null;
+    _transporter = nm.createTransport({
+      host,
+      port: Number(process.env.SMTP_PORT || 587),
+      secure: process.env.SMTP_SECURE === "1",
+      auth: { user, pass },
+    });
+    return _transporter;
+  } catch {
+    return null;
+  }
 }
 
 export interface SendEmailOptions {
-  /** 覆盖默认 FEEDBACK_TO_EMAIL；多产品实例用各自的 feedbackEmail */
+  /** Overrides FEEDBACK_TO_EMAIL; each product instance passes its own */
   to?: string;
-  /** 邮件主题前缀，如 "[GStack 反馈]" / "[AIActRadar 反馈]" */
+  
   subjectPrefix?: string;
 }
 
 export async function sendFeedbackEmail(fb: Feedback, opts: SendEmailOptions = {}): Promise<void> {
-  const t = getTransporter();
+  const t = await getTransporter();
   if (!t) throw new Error("SMTP_NOT_CONFIGURED");
   const to = opts.to || process.env.FEEDBACK_TO_EMAIL || "lixingliangsy@163.com";
-  const prefix = opts.subjectPrefix || "[GStack 反馈]";
+  const prefix = opts.subjectPrefix || "[Support feedback]";
   await t.sendMail({
     from: process.env.SMTP_FROM || to,
     to,
     subject: `${prefix} ${fb.category}`,
-    text: `分类: ${fb.category}\n来自: ${fb.email || "(匿名)"}\n附件: ${fb.attachmentName || "无"}\n\n${fb.body}`,
+    text: `Category: ${fb.category}\nFrom: ${fb.email || "(anonymous)"}\nAttachment: ${fb.attachmentName || "none"}\n\n${fb.body}`,
   });
 }
 
-const BACKOFF = [0, 5000, 30000]; // 重试间隔（ms）：首轮立即，随后 5s、30s
+const BACKOFF = [0, 5000, 30000];
 
-/** 携带重试的发送；全失败则入队列。后台异步调用，不阻塞提交响应。 */
 export async function dispatchEmail(fb: Feedback, opts: SendEmailOptions = {}): Promise<void> {
   for (let attempt = 1; attempt <= 3; attempt++) {
     if (attempt > 1) await new Promise((r) => setTimeout(r, BACKOFF[attempt - 1] || 30000));

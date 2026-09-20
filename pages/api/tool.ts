@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { PRODUCT } from '../../lib/product'
-import { AI_QUOTAS, checkAndConsumeQuota, defaultModel, resolvePlan } from '../../lib/aiGateway'
+import { AI_QUOTAS, checkAndConsumeQuota, defaultModel, resolvePlan, chatWithFallback} from '../../lib/aiGateway'
 import { getByokKey } from '../../lib/byokStore'
 import { STEP_LABELS, STEP_ORDER, advance, createRun, type StepId } from '../../lib/pipeline'
 import { saveRun, loadRun } from '../../lib/runStore'
@@ -273,43 +273,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const base = process.env.OPENAI_BASE_URL || 'https://integrate.api.nvidia.com/v1'
       const model = process.env.OPENAI_MODEL || defaultModel()
 
-      const r = await fetch(`${base}/chat/completions`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          model,
-          messages: [
-            { role: 'system', content: (PRODUCT as any).systemPrompt },
-            {
-              role: 'user',
-              content:
-                inputText +
-                '\n\nAlso respect these Rule-based hits (do not invent compliance guarantees):\n' +
-                JSON.stringify((state.artifacts.ruleHits as any)?.hits || []),
-            },
-          ],
-          temperature: 0.4,
-          max_tokens: quota.maxTokens || AI_QUOTAS[plan].maxTokens,
-        }),
-      })
-      if (!r.ok) {
-        const t = await r.text()
-        state.status = 'failed'
-        state.error = 'AI request failed'
-        saveRun(state)
-        return res.status(502).json({
-          error: 'AI service call failed: ' + t.slice(0, 160),
-          code: 'AI_UPSTREAM_FAILED',
-          degraded: true,
-          demo: false,
-          runId: state.runId,
-        })
-      }
-      const data = await r.json()
-      const text = data.choices?.[0]?.message?.content || ''
+          const text = await chatWithFallback(apiKey, base, [
+      { role: 'system', content: PRODUCT.systemPrompt },
+      { role: 'user', content: inputText },
+    ], { model, temperature: 0.7, maxTokens: AI_QUOTAS[plan].maxTokens })
+
       if (!text.trim()) {
         state.status = 'failed'
         saveRun(state)

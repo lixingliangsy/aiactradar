@@ -83,3 +83,48 @@ export function buildHowToJsonLd(name: string, steps: HowToStep[]) {
     })),
   };
 }
+
+
+// --- GEO Batch1: Product schema (derived from PRODUCT; no rating — compliant with red line) ---
+export type ProductLike = {
+  name: string
+  slug?: string
+  definitionLead?: string
+  priceMonthly?: number
+  priceYearly?: number
+  productId?: string
+}
+
+export function buildProductJsonLd(p: ProductLike, siteUrl: string) {
+  const offers: object[] = [
+    {
+      "@type": "Offer",
+      name: p.name + " — Monthly subscription",
+      price: String(p.priceMonthly ?? 0),
+      priceCurrency: "USD",
+      availability: "https://schema.org/InStock",
+      url: siteUrl + "/pricing",
+      eligibleQuantity: { "@type": "QuantitativeValue", unitCode: "MON" },
+    },
+  ]
+  if (p.priceYearly) {
+    offers.push({
+      "@type": "Offer",
+      name: p.name + " — Annual subscription",
+      price: String(p.priceYearly),
+      priceCurrency: "USD",
+      availability: "https://schema.org/InStock",
+      url: siteUrl + "/pricing",
+    })
+  }
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: p.name,
+    description: p.definitionLead || "",
+    url: siteUrl + "/",
+    brand: { "@type": "Brand", name: "LXSAI" },
+    offers,
+    // aggregateRating / review omitted: no verified public reviews yet (GEO compliance red line)
+  }
+}

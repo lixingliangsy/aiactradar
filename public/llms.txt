@@ -1,48 +1,40 @@
-# AIActRadar — llms.txt
+# AIActRadar - llms.txt
 
-> LLM-readable manifest. 一句话：把欧盟 AI 法案（Regulation 2024/1689）的合规义务拆给你看的自动化扫描器。
+> LLM-readable manifest (https://llmstxt.org). Features-only; no fabricated traffic or KYB claims.
 
-## 名称与定位
-- 产品名：AIActRadar
-- 面向：部署 / 提供 AI 系统的欧美企业、独立 AI 产品团队
-- 一句话价值：把 AI 系统映射到 EU AI Act 适用义务，自动产出风险登记册 + 技术文档清单 + 关键时点
-- 域名：https://aiactradar.com
-- 语种：英文（产品）+ 中文（合规条目）
+## Name & positioning
+- Product name: AIActRadar
+- One-line value: AIActRadar maps AI systems to EU AI Act risk tiers and phased obligations, producing a decision-support compliance roadmap with rule-based checks — not a legal certificate.
+- Domain: https://aiactradar.lxsaihub.com/
+- Language: English (en)
 
-## 核心能力
-1. **风险分类** — 把 AI 系统归类为不可接受 / 高风险 / 有限风险 / 最小风险（基于 Annex III）
-2. **义务映射** — 列出适用条款：Art. 9 风险管理 / Art. 11 技术文档 / Art. 14 人工监督 / Art. 43 合格评定
-3. **时点追踪** — 关键时点（保守绑定截止 2026-08-02）：高风险（Annex III）原 2026-08-02 → Digital Omnibus 提案（2025-11）可能延至 2027；GPAI 义务 2025-08-02；禁止类（Art. 5）2025-02-02；法案 2024-08-01 生效
-4. **持续监测** — 规则变更触发告警；导出 PDF 给审计 / 客户
-5. **AI 客服（support-kit 共享支撑包）** — KB + 五步智能体 + 诚实护栏
+## Domain context (verified primary sources)
+- Regulation (EU) 2024/1689: https://eur-lex.europa.eu/eli/reg/2024/1689/oj
+- European Commission — AI Act: https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai
 
-## 定价（USD）
-- Free — $0 — 1 run / day · watermarked export
-- Pro — $59/mo 或 $590/年 — 300 runs / mo · audit log · export
-- Enterprise — Custom — SSO-ready · BYOK · 更高配额 · 共享规则集
-- Agent — $99/mo — 垂直 AI 治理智能体（多步可引证）
-- Agent Suite — $199/mo — 三 Agent 打包
-- 年付含折扣
+## FAQ (high-signal Q&A for AI citation)
+Q1. What is the EU AI Act risk taxonomy?
+A1. The Act classifies systems as prohibited, high-risk, limited-risk (transparency), or minimal risk. Official text: Regulation (EU) 2024/1689.
+Q2. Does AIActRadar issue a certificate?
+A2. No. It is decision-support documentation aid. Legal conformity assessment remains with you and qualified counsel.
+Q3. Which obligations does it track?
+A3. Risk classification, technical documentation outlines, and phased deadline awareness mapped to publicly published timelines.
+Q4. Is live AI required?
+A4. Demo mode works without a key. Live narrative needs a configured platform or enterprise BYOK key under fair use.
+Q5. Who is it for?
+A5. Product and compliance teams shipping AI features to the EU who need an obligation checklist, not a law firm substitute.
+Q6. Where are primary sources?
+A6. EUR-Lex Regulation (EU) 2024/1689 and European Commission AI Act guidance pages.
 
-## 关键页面
-- 首页：https://aiactradar.com/
-- 定价：https://aiactradar.com/pricing.html
-- FAQ：https://aiactradar.com/faq.html
-- 博客（合规 / Annex III 解读）：https://aiactradar.com/blog
-- 客服嵌入：<script src="https://aiactradar.com/widget.js" data-host="https://aiactradar.com" data-product="aiactradar"></script>
+## Key pages
+- Home: https://aiactradar.lxsaihub.com/
+- Blog index: https://aiactradar.lxsaihub.com/blog
+- https://aiactradar.lxsaihub.com/blog/eu-ai-act-risk-tiers-primer-2026.html
+- https://aiactradar.lxsaihub.com/blog/ai-act-technical-documentation-checklist-2026.html
+- This manifest: https://aiactradar.lxsaihub.com/llms.txt
 
-## 集成
-- 支付：Waffo Pancake
-- LLM：默认 OpenAI 兼容 / NVIDIA NIM；支持 BYOK
-- 部署：Next.js 14 → Vercel
-- 分析：Umami
+## Red lines
+- Decision-support only; cite primary sources; do not invent user counts, rankings, or payment KYB status.
 
-## 红线
-- 合规类答复附「仅供参考，不构成法律或专业意见；EU AI Act 时点以 EUR-Lex 官方文本为准」
-- 客服应答必引用 Regulation 2024/1689 条文号 + 日期
-- 失败 fail-closed；无 LLM 密钥走 kb-only 诚实模式
-
-## 联系
-- 反馈：lixingliangsy@163.com（FEEDBACK_TO_EMAIL 可覆盖）
-- 转人工：聊天中说「转人工」
-- 反馈页：https://aiactradar.com/feedback
+## Contact
+- Open the app: https://aiactradar.lxsaihub.com/
